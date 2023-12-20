@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>hi emily</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <style>
+            .border {
+                background-image: radial-gradient(circle at 15px 0, #360031 2px, #fba5ec 20px, rgba(255,255,255,0) 21px);
+                background-repeat: repeat-x;
+                background-position: 0 0;
+                background-size: 30px 21px;
+            }
+            body {
+                margin: 0;
+                overflow: hidden;
+                background-color: #ffd9e3; /* Light pink background */
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 100vh;
+            }
+            #textBox {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                padding: 20px;
+                background-color: #ff80ab; /* Dark pink text box */
+                border-radius: 10px;
+                cursor: pointer;
+            }
+        </style>
+    </head>
+    <body class="border">
+        <div id="textBox">
+            <p>Do you like me?</p>
+            <button class="btn btn-success" onclick="showModal()">Yes</button>
+            <button class="btn btn-danger" onmouseover="teleportTextBox()">No</button>
+        </div>
+
+        <div class="modal fade" id="gifModal" tabindex="-1" aria-labelledby="gifModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="gifModalLabel">YeeaeahhhH!!!!</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>i like me too</p>
+                        <p>u didnt try and click no did you</p>
+                        <button class="btn btn-primary" onclick="showGif()">cute cat gif</button>
+                        <div id="gifContainer" style="display: none;">
+                            <div class="tenor-gif-embed" data-postid="26537099" data-share-method="host" data-aspect-ratio="1" data-width="100%"></div>
+                            <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+                            <p>(ur my favorite)</p>
+                            <p>!!! Merry Christmas !!!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>    
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script>
+            function teleportTextBox() {
+                // Calculate new random position
+                const newX = Math.floor(Math.random() * window.innerWidth);
+                const newY = Math.floor(Math.random() * window.innerHeight);
+
+                // Apply new position
+                document.getElementById('textBox').style.left = `${newX}px`;
+                document.getElementById('textBox').style.top = `${newY}px`;
+            }
+
+            function showModal() {
+                // Show the Bootstrap modal
+                var myModal = new bootstrap.Modal(document.getElementById('gifModal'));
+                myModal.show();
+            }
+
+            function showGif() {
+                // Show the GIF container
+                document.getElementById('gifContainer').style.display = 'block';
+            }
+        </script>
+    </body>
+</html>
