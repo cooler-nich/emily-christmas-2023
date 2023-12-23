@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>hi emily</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #3e72ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        #textBox {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background-color: #9be8ff;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="textBox">
+        <p>Click no, don't hit yes</p>
+        <p id="teleportCounter">Score: 0</p>
+        <p id="timerDisplay" style="display: none;">Timer: 0s</p>
+        <button class="btn btn-success" onmouseover="showModal('yesModal')">Yes</button>
+        <button class="btn btn-danger" onmouseover="teleportTextBox()">No</button>
+    </div>
+
+    <div class="modal fade" id="yesModal" tabindex="-1" aria-labelledby="noModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="noModalLabel">:(</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>you missed and now i have to reset your score.</p>
+                    <p id="highScore">Your high score is: 0</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let teleportCount = 0; // Counter variable
+        let timerStarted = false; // Flag to track if the timer has started
+        let timer; // Timer variable
+        let startTime; // Start time of the timer
+        let highscore = -1;
+
+        function teleportTextBox() {
+            // Calculate new random position
+            const newX = Math.floor(Math.random() * (window.innerWidth - 20));
+            const newY = Math.floor(Math.random() * (window.innerHeight - 20));
+
+            // Apply new position
+            document.getElementById('textBox').style.left = `${newX}px`;
+            document.getElementById('textBox').style.top = `${newY}px`;
+
+            // Increment the counter and update the display
+            teleportCount++;
+            startTimer();
+            document.getElementById('teleportCounter').innerText = `Your high score is: ${teleportCount}`;
+        }
+
+        function showModal(modalId) {
+            // Show the Bootstrap modal
+            if (teleportCount > highscore) {
+                highscore = teleportCount;
+            }
+            document.getElementById('highScore').innerText = `Score: ${highscore}`;
+            teleportCount = 0;
+            // Get the current time
+            startTime = new Date().getTime();
+            document.getElementById('teleportCounter').innerText = `Score: ${teleportCount}`;
+            var myModal = new bootstrap.Modal(document.getElementById(modalId));
+            myModal.show();
+        }
+
+        function startTimer() {
+            // Start the timer only if it hasn't started yet
+            if (!timerStarted) {
+                timerStarted = true;
+
+                // Get the current time
+                startTime = new Date().getTime();
+
+                // Display the timer value
+                document.getElementById('timerDisplay').style.display = 'block';
+
+                // Set a timer to teleport the box every 2 seconds
+                timer = setInterval(() => {
+                    const currentTime = new Date().getTime();
+                    const elapsedTime = Math.floor((currentTime - startTime) / 1000);
+                    document.getElementById('timerDisplay').innerText = `Timer: ${elapsedTime}s`;
+                }, 1);
+            }
+        }
+    </script>
+</body>
+</html>
